@@ -13,62 +13,45 @@ int minn = 0, maxx = 0;
 int A[100];
 
 void sol(int p, int mn, int mt, int d, int idx, int rs) {
-
-    while ((p + mn + mt + d ) > 0) {
-        if (idx >= N) break;
+    //모든 연산자 사용해 A 수열 연산했을 때 최대, 최소 값 갱신하고 return
+    if (idx == N) {
+        //min, max 값 초기화
+        if (minn == 0 && maxx == 0) minn = maxx = rs;
+        else {
+            //모든 연산자를 사용해서 연산하고 나면 최소, 최대값 판별 후 저장
+            minn = min(minn, rs);
+            maxx = max(maxx, rs);
+            return;
+        }
+    }
         //덧셈
         if (p > 0) {
-            cout << "덧" << endl;
-            rs += A[idx];
-            sol(--p, mn, mt, d, ++idx, rs);
-            
-         
-            
+            p--;    //연산자 사용
+            sol(p, mn, mt, d, idx +1, rs+A[idx]);
+            p++;    //sol이 return됐을 때는 끝까지 연산자 사용해 연산한 경우이므로 backtracking 으로 이어서 다른 방법도 시도해보기 위해 다시 더해줌
         }
+    
         //뺄셈
         if (mn > 0) {
-            cout << "뺄" << endl;
-            rs -= A[idx];
-            
-            sol(p, --mn, mt, d, ++idx, rs);
-          
-           
-            
+            mn--;
+            sol(p, mn, mt, d, idx+1, rs-A[idx]);
+            mn++;
         }
+    
         //곱셈
         if (mt > 0) {
-            cout << "곲" << endl;
-            rs *= A[idx];
-            
-            sol(p, mn, --mt, d, ++idx, rs);
-          
-            
+            mt--;
+            sol(p, mn, mt, d, idx+1, rs*A[idx]);
+            mt++;
         }
+    
         //나눗셈
-        if (d > 0) {
-            cout << "나" << endl;
-            if (rs < 0) {   //음수를 양수로 나눌 때 양수로 바꾸고 몫을 음수로 바꾸기
-                rs = -rs / A[idx];
-                rs -= rs;
-            }
-            else  rs /= A[idx];
-            
-            sol(p, mn, mt, --d, ++idx, rs);
-          
+        if (d > 0) {    //문제에서 어렵게 서술되었을 뿐 그냥 나눗셈 한다는 것. 음수, 양수 판별 불필요
+            d--;
+            sol(p, mn, mt, d, idx+1, rs/A[idx]);
+            d++;
         }
-        
     }
-    
-    if (minn == 0 && maxx == 0) minn = maxx = rs;
-    else {
-        //모든 연산자를 사용해서 연산하고 나면 최소, 최대값 판별 후 저장
-        minn = min(minn, rs);
-        cout << "민"<< endl;
-        maxx = max(maxx, rs);
-        cout << "맧" << endl;
-    }
-    
-}
 
 int main() {
 
