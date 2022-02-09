@@ -1,0 +1,46 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int T, N;
+int memo[50];
+
+int fibo(int n) {
+	if (n == 0) {
+		memo[0] = 0;
+		return 0;
+		
+	}
+	else if (n == 1) {
+		memo[1] = 1;
+		return 1;
+		
+	}
+
+	if(memo[n] == 0) {
+		memo[n] = fibo(n - 2) + fibo(n - 1);
+		return memo[n];
+	}
+
+	return memo[n];
+	
+}
+
+	int main(){
+		memset(memo, 0, sizeof(memo));
+		cin >> T;
+		for(int i = 0; i < T; i++) {
+			cin >> N;
+			
+			if (N == 0) {
+				cout << "1 0" << endl;
+			}
+			else {
+				fibo(N);
+				cout << memo[N-1] << " " << memo[N] << endl;
+			}
+			
+		}
+		return 0;
+	}
+
