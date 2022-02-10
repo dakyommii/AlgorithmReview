@@ -17,7 +17,7 @@ int solve(int n){
     
     else if (cache[n] == 0) return cache[n] = (solve(n-1) + solve(n-2))%MOD;
 
-    return cache[n]%MOD;
+    return cache[n];
 }
 
 int main(){
