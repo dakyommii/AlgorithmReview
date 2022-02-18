@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+long memo[101];
+
+int main(){
+		int T,N;
+		cin >> T;
+
+		memo[1] = 1;
+		memo[2] = 1;
+		memo[3] = 1;
+		memo[4] = 2;
+		memo[5] = 2;
+
+		for (int k = 6; k < 101; k++) {
+			memo[k] = memo[k - 1] + memo[k - 5];
+		}
+
+		for (int i = 0; i < T; i++) {
+			cin >> N;
+			cout << memo[N] << endl;
+		}
+
+		return 0;
+	}
+
