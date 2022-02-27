@@ -1,0 +1,27 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int stair[301];
+int dp[301];
+
+int main(){
+	int T;
+	cin >> T;
+
+	for (int i = 0; i < T; i++) {
+		cin >> stair[i];
+	}
+	dp[0] = stair[0];
+	dp[1] = max(stair[0] + stair[1], stair[1]);
+	dp[2] = max(stair[0] + stair[2], stair[1] + stair[2]);
+
+	for (int j = 3; j < 301; j++) {
+		dp[j] = max(dp[j - 3] + stair[j - 1] + stair[j], dp[j - 2] + stair[j]);
+	}
+
+	cout << dp[T - 1] << endl;
+
+	return 0;
+	}
+
