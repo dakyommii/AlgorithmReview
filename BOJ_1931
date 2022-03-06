@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int start[100001];
+int finish[100001];
+int N;
+vector<pair<int, int>> arr;
+
+int assignment() {
+	for (int i = 0; i < N; i++) {
+		arr.push_back(make_pair(finish[i], start[i]));	//정렬을 위해 (끝나는 시간, 시작시간)으로 저장
+	}
+
+	sort(arr.begin(), arr.end());	//가장 먼저 끝나는 회의 순으로 정렬
+
+	int next = 0;	//다음 회의가 가장 빠르게 시작할 수 있는 시간
+	int answer = 0;
+	for (int i = 0; i < arr.size(); i++) {
+		int mstart = arr[i].second, mfinish = arr[i].first;
+		if (next <= mstart) {	//다음 회의의 시작시간이 지금 회의의 끝나는 시간과 같거나 클 경우
+			answer++;
+			next = mfinish;
+		}
+	}
+
+	return answer;
+}
+
+int main(){
+	cin >> N;
+
+	for (int i = 0; i < N; i++) {
+		cin >> start[i] >> finish[i];
+	}
+
+	cout << assignment() << endl;
+
+	return 0;
+
+	}
+
