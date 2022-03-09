@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int bracket(string s) {
+	int answer = 0;
+	bool isminus = false;
+	string temp = "";
+
+	for (int i = 0; i <= s.size(); i++) {
+		//연산자일 경우
+		if (s[i] == '+' || s[i] == '-' || s[i] == '\0') {
+			if (isminus)
+				answer -= stoi(temp);
+			else
+				answer += stoi(temp);
+			temp = "";
+			if (s[i] == '-')
+				isminus = true;
+		}
+		//피연산자일 경우
+		else {
+			temp += s[i];
+		}
+	}
+	return answer;
+}
+
+
+int main(){
+	string s;
+	cin >> s;
+
+	cout << bracket(s) << endl;
+
+	return 0;
+
+	}
+
