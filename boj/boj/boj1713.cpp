@@ -12,32 +12,13 @@
 
 using namespace std;
 
-//struct photo {
-//    int time;
-//    int num;
-//    int recom;
-//};
-
-//bool cmp(photo& p1,photo& p2) {
-//    if (p1.recom==p2.recom) {
-//        return p1.time<p2.time;
-//    }
-//    return p1.recom>p2.recom;   //내림차순
-//}
-//
-//bool fin(photo& p1,photo& p2) {
-//    return p1.num<p2.num;
-//}
-
-
 int main() {
     int n,m;
     cin >> n;
     cin >> m;
     
     map<int,pair<int, int>> photo;  //사진틀에 있는 사진: map<사진번호,추천횟수,게시시간>
-//    bool upload[101];
-//    int student[101];
+
     for(int i=0;i<m;i++) {
         int idx;
         cin >> idx;
