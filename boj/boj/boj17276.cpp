@@ -67,16 +67,8 @@ int main() {
             v.push_back(vi);
         }
         
-//        for(int i=0;i<n;i++) {
-//            for(int j=0;j<n;j++) {
-//                cout << v[i][j] << " ";
-//            }
-//            cout << endl;
-//        }
-        
         // 시계
         if(c>0) {
-//            vector<vector<int>> vv;
             for(int i=0;i<c/45;i++) {
                 v=clock1(v);
             }
