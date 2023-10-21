@@ -1,50 +1,36 @@
 //
 //  boj20922.cpp
 //  boj
-//  memory: 7036 KB
-//  time: 180 ms
+//  memory: 6588 KB
+//  time: 80 ms
 //  Created by 다곰 on 2023/09/04.
 //
 
 #include <iostream>
 #include <vector>
-#include <map>
 using namespace std;
 
 int main() {
-    int n, k;
-    cin >> n >> k;
-    vector<int> num(n);
-    
+    int n,k;
+    cin >> n >>k;
+    vector<int>v(n);
     for(int i=0;i<n;i++) {
-        cin >> num[i];
+        cin >> v[i];
     }
     
-    map<int,int> mp;
-
-    int st=0,end=0;
-    for(int i=0;i<n;i++){
-        if(mp[num[i]]==k) break;
-        end++;
-        mp[num[i]]++;
-    }
-    
-    int len=end-st;
-    while(end<num.size()) {
-        mp[num[st]]--;
-        st++;
-        
-        while (end<num.size()) {
-            if(mp[num[end]]==k) break;
-            mp[num[end]]++;
-            end++;
+    int s=0,e=0,len=0;
+    int visit[1000001]={0};
+    while(e<n) {
+       if(visit[v[e]]<k) {
+           visit[v[e]]++;
+           e++;
+           len=max(len,e-s);
+       }
+        else if(visit[v[e]]==k){
+            visit[v[s]]--;
+            s++;
         }
-        
-        if(len<end-st) len=end-st;
-
     }
     
-    cout << len << endl;
+    cout << len;
 }
-
-
