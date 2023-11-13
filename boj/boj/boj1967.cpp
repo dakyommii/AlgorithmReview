@@ -1,65 +1,55 @@
 //
 //  boj1967.cpp
 //  boj
-//  memory: 100984 KB
-//  time: 64 ms
+//  memory: 2868 KB
+//  time: 12 ms
 //  Created by 다곰 on 2023/03/31.
-//
 
 #include <iostream>
 #include <vector>
 #include <cstring>
+
 using namespace std;
 
-struct edge {
-    int node;
-    int v;
-};
-vector<vector<edge>> tree;
-bool visited[10001][10001];
+vector<pair<int,int>> tree[10001];
+bool visit[10001]={false};
+int ans=0,leaf;
 
-int leaf;
-int dist=-1;
-void sol(int cur,int cnt) {
-    bool isLeaf=true;
-    for(int i=0;i<tree[cur].size();i++) {
-        edge e=tree[cur][i];
-        int node=e.node;
-        int v=e.v;
-        
-        if(!visited[cur][node]) {
-            isLeaf=false;
-            visited[cur][node]=true;
-            visited[node][cur]=true;
-            sol(node,cnt+v);
-        }
+void dfs(int cur, int dist) {
+    if(visit[cur]) return;
+    visit[cur]=true;
+    
+    if(dist>ans) {
+        ans=dist;
+        leaf=cur;
     }
     
-    if(isLeaf && dist<cnt) {
-        leaf=cur;
-        dist=cnt;
-//        cout << dist << endl;
+    for(int i=0;i<tree[cur].size();i++) {
+        int nx=tree[cur][i].first;
+        int d=tree[cur][i].second;
+        
+        dfs(nx,dist+d);
     }
+    
+    
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
     int n;
     cin >> n;
-    tree.resize(n+1);
     
     for(int i=1;i<n;i++) {
-        int p,c,v;
-        cin >> p >> c >> v;
-        tree[p].push_back({c,v});
-        tree[c].push_back({p,v});
+        int a,b,c;
+        cin >> a >> b >> c;
+        tree[a].push_back({b,c});
+        tree[b].push_back({a,c});
     }
     
-    sol(1,0);
-    memset(visited,false,sizeof(visited));
-//    visited[10001][10001]={false};
-    dist=-1;
-    sol(leaf,0);
-
-    cout << dist;
+    dfs(1,0);
+    ans=0;
+    
+    memset(visit, 0, sizeof(visit));
+    
+    dfs(leaf,0);
+    cout << ans;
 }
